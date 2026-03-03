@@ -55,6 +55,6 @@ export default function Layout({ children }) {
           to { opacity: 1; transform: translateX(0); }
         }
       `}} />
-    </>
+    </LanguageContext.Provider>
   );
 }
