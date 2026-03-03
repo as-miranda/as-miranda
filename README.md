@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="#-english">🇺🇸 English</a> | <a href="#-português">🇧🇷 Português</a>
+  <a href="#-english">🇬🇧 English</a> | <a href="#-português">🇧🇷 Português</a>
 </div>
 <br />
 
@@ -301,3 +301,20 @@
     <a href="#">⬆ Voltar ao Topo / Back to Top</a>
   </p>
 </div>
+
+---
+
+## 🔧 React structure
+
+The application has been refactored into a multi‑page layout.  Routes are handled by `react-router-dom` and components are organised as:
+
+- `/components` – shared UI (Navbar, Footer, Layout)
+- `/pages` – four page components: Home, Curriculum, BlogCreative, Contact
+- `index.jsx` – entrypoint with `<BrowserRouter>` and `<Routes>`
+
+Before running the app you will need to add the router dependency:
+
+```bash
+npm install react-router-dom
+```
+
