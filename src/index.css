@@ -3,16 +3,150 @@
 @tailwind utilities;
 
 :root {
-  --color-primary: #FFDF00;
+  --color-primary: #FFDD00;
+  --color-accent: #9CF8FF;
+  --color-dark-neutral: #323232;
+  --color-base-black: #000000;
+}
+
+html.dark :root {
+  --color-accent: #00615D;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+html.light {
+  color-scheme: light;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
-  background: white;
-  color: #111;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #000000;
+  color: #ffffff;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.light body {
+  background: #ffffff;
+  color: #323232;
 }
 
 a {
   color: var(--color-primary);
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #ffed4d;
+}
+
+/* Smooth animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce-subtle {
+  0%, 100% {
+    transform: translateY(-5%);
+  }
+  50% {
+    transform: translateY(0);
+  }
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 4s ease-in-out infinite;
+}
+
+.animate-in {
+  animation-duration: 0.6s;
+  animation-fill-mode: both;
+}
+
+.fade-in {
+  animation-name: fadeIn;
+}
+
+.slide-in-from-bottom-5 {
+  animation-name: slideInFromBottom;
+}
+
+.slide-in-from-right-5 {
+  animation-name: slideInFromRight;
+}
+
+.slide-in-from-top-5 {
+  animation-name: slideInFromTop;
+}
+
+/* Dark mode utility classes */
+.dark-bg-primary {
+  @apply bg-white dark:bg-baseBlack;
+}
+
+.dark-bg-secondary {
+  @apply bg-darkNeutral/10 dark:bg-darkNeutral/20;
+}
+
+.dark-text-primary {
+  @apply text-darkNeutral dark:text-white;
+}
+
+.dark-text-secondary {
+  @apply text-darkNeutral/70 dark:text-gray-400;
+}
+
+.dark-border {
+  @apply border-darkNeutral/20 dark:border-darkNeutral/40;
+}
+
+/* Smooth transitions */
+@media (prefers-reduced-motion: no-preference) {
+  html,
+  body,
+  * {
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
 }

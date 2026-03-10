@@ -1,60 +1,61 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
-// language context
+// Language context
 export const LanguageContext = createContext();
 
+// Theme context
+export const ThemeContext = createContext();
+
 export default function Layout({ children }) {
-  const [lang, setLang] = useState('en');
-  const toggleLanguage = () => setLang((l) => (l === 'en' ? 'pt' : 'en'));
+  const [lang, setLang] = useState(() => {
+    // Load language from localStorage or default to 'pt'
+    const savedLang = localStorage.getItem('language');
+    return savedLang || 'pt';
+  });
+
+  const [theme, setTheme] = useState(() => {
+    // Load theme from localStorage or default to 'dark'
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme || 'dark';
+  });
+
+  const toggleLanguage = () => {
+    const newLang = lang === 'en' ? 'pt' : 'en';
+    setLang(newLang);
+    localStorage.setItem('language', newLang);
+  };
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+  };
+
+  useEffect(() => {
+    // Update HTML class for Tailwind dark mode
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+      document.documentElement.style.colorScheme = 'dark';
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      document.documentElement.style.colorScheme = 'light';
+    }
+  }, [theme]);
 
   return (
     <LanguageContext.Provider value={{ lang, toggleLanguage }}>
-      <Navbar />
-
-      <main className="min-h-[70vh]">{children}</main>
-
-      <Footer />
-
-      {/* global animations and utilities */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes bounce-subtle {
-          0%, 100% { transform: translateY(-5%); }
-          50% { transform: translateY(0); }
-        }
-        .animate-bounce-subtle {
-          animation: bounce-subtle 4s ease-in-out infinite;
-        }
-        html {
-          scroll-behavior: smooth;
-        }
-        .animate-in {
-          animation-duration: 0.6s;
-          animation-fill-mode: both;
-        }
-        .fade-in {
-          animation-name: fadeIn;
-        }
-        .slide-in-from-bottom-5 {
-          animation-name: slideInBottom;
-        }
-        .slide-in-from-right-5 {
-          animation-name: slideInRight;
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @keyframes slideInBottom {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideInRight {
-          from { opacity: 0; transform: translateX(20px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-      `}} />
+      <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <div className={`${theme === 'dark' ? 'dark' : 'light'}`}>
+          <Navbar />
+          <main className="min-h-[70vh]">{children}</main>
+          <Footer />
+        </div>
+      </ThemeContext.Provider>
     </LanguageContext.Provider>
   );
 }
+
