@@ -10,7 +10,7 @@ Personal digital system / portfolio / archive for Ana Sofia de Miranda.
 - lucide-react para ícones
 
 ## Estrutura de conteúdo
-O conteúdo editável fica principalmente em `src/data.js`:
+O conteúdo editável fica principalmente em `src/data/index.js`:
 - `projects`
 - `posts`
 - `experience`

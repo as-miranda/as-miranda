@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://as-miranda.github.io/as-miranda/sitemap.xml
